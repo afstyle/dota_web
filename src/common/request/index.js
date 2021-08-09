@@ -10,14 +10,14 @@ import { baseUrl, requstParams } from '@/common/config'
 const service = axios.create({
 	// process.env.NODE_ENV === 'development' 来判断是否开发环境
 	// easy-mock服务挂了，暂时不使用了
-	// baseURL: 'https://www.easy-mock.com/mock/592501a391470c0ac1fab128', //baseUrl
+	baseURL: 'http://localhost:8088/dota/',
 	timeout: 5000
 });
 
 service.interceptors.request.use(
 	config => {
 		// lss 2021/5/10 新增ajax请求的公共入参封装 ==============================
-		// config.baseUrl = baseUrl
+		config.baseUrl = baseUrl
 		config.params = { ...requstParams() }
 		
 		// const newAllPar = { ...config.params, ...config.data }
@@ -38,11 +38,11 @@ service.interceptors.response.use(
 			// return response.data;
 			// lss 2021/5/10 新增ajax回参统一处理 ==============================
 			// 0成功状态
-			if (response.data.error === 0){
-				return response.data.body
+			if (response.data.code === 200){
+				return response.data.data
 			}
-			// tonken失效等，重定向到登录页。10010 10011 
-			else if (response.data.error === 10010 || response.data.error === 10011){
+			// tonken失效等，重定向到登录页。
+			else if (response.data.code === 9999 || response.data.code === 10011){
 				ElMessage.error(response.data.msg)
 				sessionStorage.clear()
 				router.push('/login')
@@ -53,7 +53,7 @@ service.interceptors.response.use(
 			} */	
 			// 其他情况统一弹出信息框，避免业务代码中出现一大堆信息框的冗余代码
 			else {
-				ElMessage.error(response.data.msg)
+				ElMessage.error(response.data.message)
 			}
 		} else {
 			Promise.reject();

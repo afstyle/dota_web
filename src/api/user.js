@@ -1,6 +1,6 @@
 import http from '@/common/request';
 
-export const login = data => http.post('/v1/login', data)	// 登录
+export const login = data => http.post('/b/user/login', data)	// 登录
 
 export const logout = data => http.post('/v1/logout', data)	// 登出
 

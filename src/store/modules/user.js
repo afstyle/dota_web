@@ -25,11 +25,11 @@ const state = {
 const mutations = {
 	DO_LOGIN(state, payload) {
 		// state.loginProvider = payload.provider;
-		state.token = payload.userInfo.token;
+		state.token = payload.userInfo;
 		// 缓存本地，兼容H5刷新。默认8小时候过期
 		/* cache.put('token', payload.userInfo.token, 60 * 60 * 8)
 		cache.put('userInfo', payload.userInfo, 60 * 60 * 8) 	// 只包含部分用户信息 */
-		sessionStorage['token'] = payload.userInfo.token
+		sessionStorage['token'] = payload.userInfo
 		sessionStorage['userInfo'] = JSON.stringify(payload.userInfo) 
 	},
 	DO_LOGOUT(state) {
