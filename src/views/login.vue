@@ -2,7 +2,7 @@
 	<div class="login-wrap">
 		<div class="ms-login">
 			<div class="ms-title">
-				XX后台管理系统
+				DoDo后台管理系统
 			</div>
 			<el-form
 				ref="elmRefs"
