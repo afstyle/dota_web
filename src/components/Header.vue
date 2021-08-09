@@ -15,7 +15,7 @@
 			/>
 		</div>
 		<div class="logo">
-			XX后台管理系统
+			DoDo后台管理系统
 		</div>
 		<div class="header-right">
 			<div class="header-user-con">
