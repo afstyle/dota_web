@@ -95,8 +95,8 @@ export default {
 		// 获取当前用户权限菜单等（暂时放在组件内获取，不然刷新页面菜单会消失）
 		const getPermissionMenu = async () => {
 			// 动态获取菜单接口入参一般为token或者userId，因为采用mock模拟返回所以临时使用nickName作为角色入参，实际开发可根据接口差异修改入参
-			let par = { username: JSON.parse(sessionStorage['userInfo']).nickName }
-			const res = await store.dispatch('user/getPermissionMenu', par)
+			let token = sessionStorage['token']
+			const res = await store.dispatch('user/getPermissionMenu', token)
 			if (res){ 
 				console.log('接口返回的菜单数组为：', res)
 			}

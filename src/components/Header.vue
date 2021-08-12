@@ -15,7 +15,7 @@
 			/>
 		</div>
 		<div class="logo">
-			DoDo后台管理系统
+			Dota后台管理系统
 		</div>
 		<div class="header-right">
 			<div class="header-user-con">
@@ -38,7 +38,7 @@
 				<!-- 用户头像 -->
 				<div class="user-avator">
 					<!-- <img src="~@/assets/img/img.jpg"> -->
-					<img :src="userInfo.headimg">
+					<img :src="userInfo.headImg">
 				</div>
 				<!-- 用户名下拉菜单 -->
 				<el-dropdown
@@ -47,17 +47,17 @@
 					@command="handleCommand"
 				>
 					<span class="el-dropdown-link">
-						{{ userInfo.nickName }}
+						{{ userInfo.nickname }}
 						<i class="el-icon-caret-bottom" />
 					</span>
 					<template #dropdown>
 						<el-dropdown-menu>
-							<a
+							<!--							<a
 								href="https://github.com/lss5270/vue-manage-system-plus"
 								target="_blank"
 							>
 								<el-dropdown-item>项目仓库</el-dropdown-item>
-							</a>
+							</a>-->
 							<el-dropdown-item
 								divided
 								command="loginout"
@@ -82,11 +82,11 @@ export default {
 	    const store = useStore()
 	    const state = reactive({
 			fullscreen: false,
-			message: 2,
+			message: 0,
 		})
 		
 		const userInfo = computed(() => {
-			// console.log(JSON.parse(sessionStorage.getItem('userInfo')))
+			console.log(JSON.parse(sessionStorage.getItem('userInfo')))
 			return JSON.parse(sessionStorage.getItem('userInfo'));
 		})
 		const collapse = computed(() => {

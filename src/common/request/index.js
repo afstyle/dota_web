@@ -42,7 +42,7 @@ service.interceptors.response.use(
 				return response.data.data
 			}
 			// tonken失效等，重定向到登录页。
-			else if (response.data.code === 9999 || response.data.code === 10011){
+			else if (response.data.code === 1000 || response.data.code === 1003){
 				ElMessage.error(response.data.msg)
 				sessionStorage.clear()
 				router.push('/login')

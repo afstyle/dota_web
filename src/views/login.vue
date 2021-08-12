@@ -2,7 +2,7 @@
 	<div class="login-wrap">
 		<div class="ms-login">
 			<div class="ms-title">
-				DoDo后台管理系统
+				Dota后台管理系统
 			</div>
 			<el-form
 				ref="elmRefs"
@@ -101,7 +101,7 @@ export default {
 			elmRefs.value.validate(valid => {
 				if (valid) {
 					// 改成vuex登录模式，并且同时存储用户信息
-					toLogin()
+					toLogin();
 				} else {
 					this.$message.error('请输入账号和密码');
 					return false;
@@ -112,6 +112,17 @@ export default {
 		// 登录
 		const toLogin = async () => {
 			const res = await store.dispatch('user/login', state.param)
+			if (res){
+				await getUserInfo()
+				router.push('/');
+				// $push('/'); // test code
+			}
+		}
+
+		// 获取用户信息
+		const getUserInfo = async () => {
+		  let token = sessionStorage['token']
+			const res = await store.dispatch('user/getUserInfo', token)
 			if (res){
 				// await getPermissionMenu()
 				router.push('/');

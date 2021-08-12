@@ -9,7 +9,7 @@ import {
 	login,
 	logout,
 	getPermissionMenu,
-	// getUserInfo
+	getUserInfo
 } from '@/api/user'
 
 const state = {
@@ -25,12 +25,12 @@ const state = {
 const mutations = {
 	DO_LOGIN(state, payload) {
 		// state.loginProvider = payload.provider;
-		state.token = payload.userInfo;
+		state.token = payload.token;
 		// 缓存本地，兼容H5刷新。默认8小时候过期
 		/* cache.put('token', payload.userInfo.token, 60 * 60 * 8)
 		cache.put('userInfo', payload.userInfo, 60 * 60 * 8) 	// 只包含部分用户信息 */
-		sessionStorage['token'] = payload.userInfo
-		sessionStorage['userInfo'] = JSON.stringify(payload.userInfo) 
+		sessionStorage['token'] = payload.token
+		// sessionStorage['userInfo'] = JSON.stringify(payload.userInfo)
 	},
 	DO_LOGOUT(state) {
 		// 登出后清除相关状态数据 2021/3/9
@@ -69,7 +69,7 @@ const actions = {
 				if (!res){
 					return
 				}
-				commit('DO_LOGIN', { userInfo: res })
+				commit('DO_LOGIN', { token: res })
 				rs(res)
 			}).catch(err=>{
 				rj(err)
@@ -106,18 +106,21 @@ const actions = {
 	// async logout({ commit }){
 	// 	commit('DO_LOGOUT', await logout())
 	// },
-	/* async getUserInfo({ commit }){
+	getUserInfo({ commit }, data){
 		// commit('SET_USERINFO', { userInfo: getUserInfo() })
 		return new Promise((rs, rj)=>{
 			// 返回全部用户信息
-			getUserInfo().then(res=>{
+			getUserInfo(data).then(res=>{
+				if (!res){
+					return
+				}
 				commit('SET_USERINFO', { userInfo: res })
 				rs(res)
 			}).catch(err=>{
 				rj(err)
 			})
 		})
-	}, */
+	},
 	setUserInfo({ commit }, data){
 		commit('SET_USERINFO', { userInfo: data })
 	},
@@ -128,7 +131,10 @@ const actions = {
 			if (state.permissionMenu.length > 0) {
 				rs(state.permissionMenu)
 			} else {
-				getPermissionMenu(data).then(res=>{
+				let menu = '[{"icon":"el-icon-lx-home","path":"/dashboard","title":"系统首页"},{"icon":"el-icon-lx-cascades","path":"/baseTable","title":"基础表格"},{"icon":"el-icon-lx-copy","path":"/tabs","title":"tab选项卡"},{"icon":"el-icon-office-building","path":"/org","title":"组织机构","children":[{"path":"/org/demo/index","title":"组织机构逻辑"},{"path":"/org/userdepManage/index","title":"用户部门管理"},{"path":"/org/menuManage/index","title":"菜单管理"},{"path":"/org/roleManage/index","title":"角色管理"},{"path":"/org/postManage/index","title":"岗位管理"}]},{"icon":"el-icon-lx-calendar","path":"/form","title":"表单相关","children":[{"path":"/form/baseform","title":"基本表单"},{"path":"/form-2","title":"三级菜单","children":[{"path":"/form/form-2/editor","title":"富文本编辑器"},{"path":"/form/form-2/markdown","title":"markdown编辑器"}]},{"path":"/form/upload","title":"文件上传"}]},{"icon":"el-icon-lx-emoji","path":"/icon","title":"自定义图标"},{"icon":"el-icon-pie-chart","path":"/baseCharts","title":"schart图表"},{"icon":"el-icon-lx-global","path":"/i18n","title":"国际化功能"},{"icon":"el-icon-lx-warn","path":"/error","title":"错误处理","children":[{"path":"/error/403","title":"403页面"},{"path":"/error/404","title":"404页面"}]}]';
+				commit('SET_PERMISSIONMENU', { permissionMenu: JSON.parse(menu) })
+
+				/* getPermissionMenu(data).then(res=>{
 					if (!res){
 						return
 					}
@@ -136,7 +142,7 @@ const actions = {
 					rs(res)
 				}).catch(err=>{
 					rj(err)
-				})
+				})*/
 			}
 		})
 	},

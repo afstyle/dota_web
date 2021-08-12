@@ -135,7 +135,7 @@ const router = createRouter({
 
 // 全局钩子
 router.beforeEach((to, from, next) => {
-	document.title = `${to.meta.title} | XX后台管理系统`;
+	document.title = `${to.meta.title} | Dota后台管理系统`;
 	const token = sessionStorage.getItem('token');
 	const permissionMenu = store.state.user.permissionMenu;
 	if (!token && to.path !== '/login') { // 未登录重定向到登录（除了登录页，其他都需要登录后才能进入）
